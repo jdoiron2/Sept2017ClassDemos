@@ -129,4 +129,8 @@ public partial class SamplePages_TabbedCRUDReview : System.Web.UI.Page
         ReleaseYear.Text = "";
         ReleaseLabel.Text = "";
     }
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
+    {
+        MessageUserControl.HandleDataBoundException(e);
+    }
 }
