@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using ChinookSystem.BLL.Security;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

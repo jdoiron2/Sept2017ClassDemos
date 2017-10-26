@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\Website\Bin\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -54,6 +57,7 @@
     <Compile Include="Entities\MediaType.cs" />
     <Compile Include="Entities\Playlist.cs" />
     <Compile Include="Entities\PlaylistTrack.cs" />
+    <Compile Include="Entities\Security\ApplicationUser.cs" />
     <Compile Include="Entities\Track.cs" />
     <Compile Include="POCOs\ArtistAlbumByReleaseYear.cs" />
     <Compile Include="POCOs\TrackPOCO.cs" />
