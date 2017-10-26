@@ -61,6 +61,7 @@
     <Compile Include="BLL\AlbumController.cs" />
     <Compile Include="BLL\ArtistController.cs" />
     <Compile Include="BLL\GenreController.cs" />
+    <Compile Include="BLL\Security\RoleManager.cs" />
     <Compile Include="BLL\Security\UserManager.cs" />
     <Compile Include="DAL\ChinookContext.cs" />
     <Compile Include="DAL\Security\ApplicationDbContext.cs" />

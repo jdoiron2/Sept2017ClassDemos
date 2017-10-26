@@ -11,5 +11,6 @@ namespace Chinook.Data.Entities.Security
     {
         public int? EmployeeId { get; set; }
         public int? CustomerID { get; set; }
+        public object EmployeeID { get; set; }
     }
 }
