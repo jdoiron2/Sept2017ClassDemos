@@ -1,15 +1,18 @@
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Chinook.Data.Entities
 {
-    [Table("Playlists")]
-    public class Playlist
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Playlist
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Playlist()
+        {
+            PlaylistTracks = new HashSet<PlaylistTrack>();
+        }
 
         public int PlaylistId { get; set; }
 
@@ -20,5 +23,7 @@ namespace Chinook.Data.Entities
         [StringLength(120)]
         public string UserName { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
     }
 }

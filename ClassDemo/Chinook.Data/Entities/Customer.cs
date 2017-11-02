@@ -1,15 +1,19 @@
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Chinook.Data.Entities
 {
-    [Table("Customers")]
-    public class Customer
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Customer
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Customer()
+        {
+            Invoices = new HashSet<Invoice>();
+        }
+
         public int CustomerId { get; set; }
 
         [Required]
@@ -50,6 +54,9 @@ namespace Chinook.Data.Entities
 
         public int? SupportRepId { get; set; }
 
+        public virtual Employee Employee { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

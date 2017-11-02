@@ -1,20 +1,24 @@
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Chinook.Data.Entities
 {
-    [Table("Tracks")]
-    public class Track
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Track
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Track()
+        {
+            InvoiceLines = new HashSet<InvoiceLine>();
+            PlaylistTracks = new HashSet<PlaylistTrack>();
+        }
 
         public int TrackId { get; set; }
 
-        [Required]
-        [StringLength(200)]
+        [Required(ErrorMessage ="Name is Required")]
+        [StringLength(200,ErrorMessage ="TrackName limited to 200 characters")]
         public string Name { get; set; }
 
         public int? AlbumId { get; set; }
@@ -33,10 +37,16 @@ namespace Chinook.Data.Entities
         [Column(TypeName = "numeric")]
         public decimal UnitPrice { get; set; }
 
-        public virtual Genre Genre { get; set; }
         public virtual Album Album { get; set; }
-        public virtual MediaType MediaType { get; set; }
-        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
+
+        public virtual Genre Genre { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
+
+        public virtual MediaType MediaType { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
     }
 }

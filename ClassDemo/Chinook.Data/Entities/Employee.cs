@@ -1,15 +1,20 @@
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Chinook.Data.Entities
 {
-    [Table("Employees")]
-    public class Employee
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Employee
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            Customers = new HashSet<Customer>();
+            Employees1 = new HashSet<Employee>();
+        }
+
         public int EmployeeId { get; set; }
 
         [Required]
@@ -53,6 +58,12 @@ namespace Chinook.Data.Entities
         [StringLength(60)]
         public string Email { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee> Employees1 { get; set; }
+
+        public virtual Employee Employee1 { get; set; }
     }
 }

@@ -1,15 +1,13 @@
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Chinook.Data.Entities
 {
-    [Table("InvoiceLines")]
-    public class InvoiceLine
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class InvoiceLine
     {
-        [Key]
         public int InvoiceLineId { get; set; }
 
         public int InvoiceId { get; set; }
@@ -21,5 +19,8 @@ namespace Chinook.Data.Entities
 
         public int Quantity { get; set; }
 
+        public virtual Invoice Invoice { get; set; }
+
+        public virtual Track Track { get; set; }
     }
 }
