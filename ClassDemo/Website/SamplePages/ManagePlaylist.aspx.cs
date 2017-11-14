@@ -111,6 +111,33 @@ public partial class SamplePages_ManagePlaylist : System.Web.UI.Page
         ListViewCommandEventArgs e)
     {
         //code to go here
+        if (String.IsNullOrEmpty(PlaylistName.Text))
+        {
+            MessageUserControl.ShowInfo("Warning", "PlayList Name is Required.");
+        }
+        else
+        {
+            string username = User.Identity.Name;
+
+            //where does trackid come from
+            // ListViewCommandEventArgs e contains the parameter values for this event;
+            // CommandArgument
+            //CommandArgument is an object
+            int trackid = int.Parse(e.CommandArgument.ToString());
+
+            //send you collection of parameter values to the BLL for processing
+            MessageUserControl.TryRun(() =>
+                {
+                    PlaylistTracksController sysmgr = new PlaylistTracksController();
+                    List<UserPlaylistTrack> refreshResults = sysmgr.Add_TrackToPLaylist(PlaylistName.Text, username, trackid);
+                    PlayList.DataSource = refreshResults;
+                    PlayList.DataBind();
+            },"Success","Your track has been added to your Playlist");
+
+
+
+        }
+
     }
 
     protected void MoveUp_Click(object sender, EventArgs e)
