@@ -94,7 +94,7 @@ namespace ChinookSystem.BLL
                     //I need to generate the next TrackNumber
                     tracknumber = exists.PlaylistTracks.Count() + 1;
 
-                    //validation: om our example a track can only exist once in a particular playlist
+                    //validation: in our example a track can only exist once in a particular playlist
                     newTrack = exists.PlaylistTracks.SingleOrDefault(x => x.TrackId == trackid);
                     if (newTrack != null)
                     {
@@ -124,6 +124,83 @@ namespace ChinookSystem.BLL
             {
                 //code to go here 
 
+                //query to get the Playlist id
+                var exists = (from x in context.Playlists
+                              where x.UserName.Equals(username)
+                              && x.Name.Equals(playlistname)
+                              select x).FirstOrDefault();
+                if (exists == null)
+                {
+                    throw new Exception("Play list has been removed from the file.");
+                }
+                else
+                {
+                    PlaylistTrack moveTrack = (from x in 
+                                                   exists.PlaylistTracks
+                                               where x.TrackId == trackid
+                                               select x).FirstOrDefault();
+                    if (moveTrack == null)
+                    {
+                        throw new Exception("Play list Track has been removed from the file.");
+                    }
+                    else
+                    {
+                        PlaylistTrack otherTrack = null;
+                        if (direction.Equals("up"))
+                        {
+                            //up
+                            if (moveTrack.TrackNumber == 1)
+                            {
+                                throw new Exception("Play list Track already at top.");
+                            }
+                            else
+                            {
+                                otherTrack = (from x in
+                                                   exists.PlaylistTracks
+                                             where x.TrackNumber == moveTrack.TrackNumber - 1
+                                             select x).FirstOrDefault();
+                                if (otherTrack == null)
+                                {
+                                    throw new Exception("Other Play list Track is missing.");
+                                }
+                                else
+                                {
+                                    moveTrack.TrackNumber -= 1;
+                                    otherTrack.TrackNumber += 1;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //down
+                            if (moveTrack.TrackNumber == exists.PlaylistTracks.Count)
+                            {
+                                throw new Exception("Play list Track already at bottom.");
+                            }
+                            else
+                            {
+                                otherTrack = (from x in
+                                                   exists.PlaylistTracks
+                                              where x.TrackNumber == moveTrack.TrackNumber + 1
+                                              select x).FirstOrDefault();
+                                if (otherTrack == null)
+                                {
+                                    throw new Exception("Other Play list Track is missing.");
+                                }
+                                else
+                                {
+                                    moveTrack.TrackNumber += 1;
+                                    otherTrack.TrackNumber -= 1;
+                                }
+                            }
+                        }//end of the up/down
+                        //staging
+                        context.Entry(moveTrack).Property(y => y.TrackNumber).IsModified = true;
+                        context.Entry(otherTrack).Property(y => y.TrackNumber).IsModified = true;
+                        //saving (apply update to database)
+                        context.SaveChanges();
+                    }
+                }
             }
         }//eom
 
