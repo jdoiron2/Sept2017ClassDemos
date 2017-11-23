@@ -152,6 +152,7 @@
 
         </asp:ListView>
         <br /><br />
+        <%--Fetch Lookup Controls --%>
         <asp:Label ID="Label6" runat="server" Text="Playlist Name:"></asp:Label>
         <asp:TextBox ID="PlaylistName" runat="server"></asp:TextBox>
         <asp:Button ID="PlayListFetch" runat="server" Text="Fetch" 
